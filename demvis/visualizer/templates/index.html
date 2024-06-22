@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}
+DEM Visualizer
+{% endblock title %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">OpenTopography Data Request Form</h1>
+    <form action={% url "process" %} method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="demtype">DEM Type (required):</label>
+            <select class="form-control" id="demtype" name="demtype" required>
+                <option value="SRTMGL3">SRTMGL3 (SRTM GL3 90m)</option>
+                <option value="SRTMGL1">SRTMGL1 (SRTM GL1 30m)</option>
+                <option value="SRTMGL1_E">SRTMGL1_E (SRTM GL1 Ellipsoidal 30m)</option>
+                <option value="AW3D30">AW3D30 (ALOS World 3D 30m)</option>
+                <option value="AW3D30_E">AW3D30_E (ALOS World 3D Ellipsoidal 30m)</option>
+                <option value="SRTM15Plus">SRTM15Plus (Global Bathymetry SRTM15+ V2.1 500m)</option>
+                <option value="NASADEM">NASADEM (NASADEM Global DEM)</option>
+                <option value="COP30">COP30 (Copernicus Global DSM 30m)</option>
+                <option value="COP90">COP90 (Copernicus Global DSM 90m)</option>
+                <option value="EU_DTM">EU_DTM (DTM 30m)</option>
+                <option value="GEDI_L3">GEDI_L3 (DTM 1000m)</option>
+                <option value="GEBCOIceTopo">GEBCOIceTopo (Global Bathymetry 500m)</option>
+                <option value="GEBCOSubIceTopo">GEBCOSubIceTopo (Global Bathymetry 500m)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="south">South (required):</label>
+            <input type="number" class="form-control" id="south" name="south" placeholder="e.g., 50" required>
+        </div>
+
+        <div class="form-group">
+            <label for="north">North (required):</label>
+            <input type="number" class="form-control" id="north" name="north" placeholder="e.g., 50.1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="west">West (required):</label>
+            <input type="number" class="form-control" id="west" name="west" placeholder="e.g., 14.35" required>
+        </div>
+
+        <div class="form-group">
+            <label for="east">East (required):</label>
+            <input type="number" class="form-control" id="east" name="east" placeholder="e.g., 14.6" required>
+        </div>
+
+        <div class="form-group">
+            <label for="outputFormat">Output Format (optional):</label>
+            <select class="form-control" id="outputFormat" name="outputFormat">
+                <option value="GTiff">GTiff</option>
+                <option value="AAIGrid">AAIGrid</option>
+                <option value="HFA">HFA</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="API_Key">API Key (required):</label>
+            <input type="text" class="form-control" id="API_Key" name="API_Key" value="demoapikeyot2022" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock  %}
