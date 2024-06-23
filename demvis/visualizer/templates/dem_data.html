@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}
+    3D DEM Visualization
+{% endblock %}
+{% block scripts %}
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const colorscaleSelect = document.getElementById('colorscale-select');
+            colorscaleSelect.addEventListener('change', function () {
+                const selectedColorscale = this.value;
+                Plotly.restyle('plotly-div', 'colorscale', [selectedColorscale]);
+            });
+        });
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="display-4">3D Digital Elevation Model</h1>
+            <p class="lead">An interactive 3D visualization of the Digital Elevation Model</p>
+            <!-- Colorscale Switcher -->
+            <div class="form-group">
+                <label for="colorscale-select">Select Colorscale:</label>
+                <select class="form-control" id="colorscale-select" style="max-width: 300px; margin: 0 auto;">
+                    <option value="terrain">Terrain</option>
+                    <option value="viridis">Viridis</option>
+                    <option value="cividis">Cividis</option>
+                    <option value="plasma">Plasma</option>
+                    <option value="magma">Magma</option>
+                    <option value="inferno">Inferno</option>
+                    <option value="rainbow">Rainbow</option>
+                    <option value="earth">Earth</option>
+                    <option value="electric">Electric</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-12">
+            <div id="plotly-div">
+                {{ plot_div|safe }}
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-12">
+            <a href="{{ url }}" class="btn btn-primary">Download DEM</a>
+        </div>
+    </div>
+{% endblock %}
