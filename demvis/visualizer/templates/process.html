@@ -24,9 +24,38 @@ DEM Visualizer
             <ul>
                 <li><strong>URL:</strong> <a href="{{ data.url }}" target="_blank">DEM Download</a></li>
             </ul>
+            <div id="demResult" class="mt-4">
+                <h2>DEM Data</h2>
+                <p>Loading...</p>
+            </div>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/geotiff"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const demResult = document.getElementById("demResult");
+        const demUrl = "{{ data.url|escapejs }}"; // Ensuring proper JavaScript escaping
+        
+        getGeoTiff(demUrl).catch((error) => {
+            console.error(error);
+            demResult.innerHTML = `<p>Error loading DEM data. ${error.message}</p>`;
+        })
+    });
+
+    const getGeoTiff = async(url) => {
+        const rawTiff = await GeoTIFF.fromUrl(url);
+        const tifImage = await rawTiff.getImage();
+        const image = {
+            width: tifImage.getWidth(),
+            height: tifImage.getHeight(),
+        };
+        
+        const data = await tifImage.readRasters({ interleave: true });
+        console.time("parseGeom");
+    }
+</script>
 {% else %}
 <div class="container mt-5">
     <h1 class="mb-4">DEM Visualizer</h1>

@@ -5,7 +5,7 @@ DEM Visualizer
 {% block content %}
 <div class="container mt-5">
     <h1 class="mb-4">OpenTopography Data Request Form</h1>
-    <form action={% url "process" %} method="POST">
+    <form action={% url "process" %} method="POST" id="dataForm">
         {% csrf_token %}
         <div class="form-group">
             <label for="demtype">DEM Type (required):</label>
@@ -62,5 +62,6 @@ DEM Visualizer
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <div id="result" class="mt-5"></div>
 </div>
 {% endblock  %}
